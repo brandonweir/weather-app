@@ -1,0 +1,11 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.container {
+    padding-top: 20px;
+}
+
+/* Removed styles related to the map */
+/* Additional styles for your app */

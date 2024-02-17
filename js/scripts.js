@@ -1,4 +1,19 @@
-const apiKey = 'YOUR_OPEN_WEATHER_API_KEY'; // Replace with your actual API key
+const apiKey = process.env.OPEN_WEATHER_API_KEY; // Keep this line unchanged
+
+document.addEventListener('DOMContentLoaded', () => {
+    if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(position => {
+            fetchWeatherByCoords(position.coords.latitude, position.coords.longitude);
+        }, () => {
+            console.log('Geolocation is not available or not permitted by the user.');
+        });
+    }
+
+    document.getElementById('fetchWeatherBtn').addEventListener('click', () => {
+        const locationInput = document.getElementById('locationInput').value;
+        fetchWeatherByLocation(locationInput);
+    });
+});
 
 async function fetchWeatherByLocation(location) {
     try {
@@ -30,17 +45,4 @@ function displayWeather(data) {
         <p>Temperature: ${data.main.temp}°F</p>
         <p>Weather: ${data.weather[0].description}</p>
     `;
-}
-
-document.getElementById('fetchWeatherBtn').addEventListener('click', () => {
-    const locationInput = document.getElementById('locationInput').value;
-    fetchWeatherByLocation(locationInput);
-});
-
-if ('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition((position) => {
-        fetchWeatherByCoords(position.coords.latitude, position.coords.longitude);
-    }, () => {
-        console.log('Geolocation is not available or not permitted by the user.');
-    });
 }
